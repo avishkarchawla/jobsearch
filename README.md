@@ -8,7 +8,7 @@
 ---
 
 ## 🚀 Live Demo
-- **Cloud Hosted URL:** [http://jobdhoondho-2026.surge.sh](http://jobdhoondho-2026.surge.sh)
+- **Cloud Hosted URL:** [http://jobdhoondho-2026.surge.sh]([http://jobdhoondho-2026.surge.sh](https://jobdhoondo.netlify.app/))
 
 ---
 
