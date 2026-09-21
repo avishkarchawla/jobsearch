@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobDhoondho | ...Offer Follows My Brother!</title>
+    <meta name="description" content="JobDhoondho - ...Offer Follows My Brother! Apple-inspired smart job search matrix indexing LinkedIn, Naukri, Indeed, Google Careers, Amazon, Microsoft, Greenhouse, Lever, Workday, and 25+ global portals.">
+    
+    <!-- Premium Google Fonts: Plus Jakarta Sans, Outfit & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600;1,700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PDF.js Library for Browser-Side PDF Resume Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Apple-Style Navigation Bar with Refined Brand Typography & Logo -->
+    <header class="app-header">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fa-solid fa-bolt-lightning"></i>
+            </div>
+            <div class="logo-text">
+                <div class="brand-title-wrap">
+                    <span class="brand-name">Job<span class="brand-highlight">Dhoondho</span></span>
+                    <span class="badge-apple">PRO</span>
+                </div>
+                <p class="brand-punchline">...Offer Follows My Brother! <span class="punchline-emoji">🚀</span></p>
+            </div>
+        </div>
+        
+        <nav class="nav-links">
+            <button class="nav-btn active" id="nav-search" onclick="switchTab('search')">
+                <i class="fa-solid fa-compass"></i> Job Finder Matrix
+            </button>
+            <button class="nav-btn" id="nav-tracker" onclick="switchTab('tracker')">
+                <i class="fa-solid fa-list-check"></i> App Tracker 
+                <span class="count-badge" id="tracker-count">0</span>
+            </button>
+            <button class="nav-btn" id="nav-boolean" onclick="switchTab('boolean')">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> X-Ray Boolean
+            </button>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <!-- SEARCH SECTION -->
+        <section id="section-search" class="app-section active">
+            <!-- Master Search Controls Card -->
+            <div class="search-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-sliders"></i> Smart Search & Brand Parameters</h2>
+                    <span class="subtext">Job Dhoondho across 25+ job portals, direct company career pages (Google, Stripe, OpenAI), international locations, and ATS engines!</span>
+                </div>
+                
+                <form id="search-form" onsubmit="event.preventDefault(); updateLinks();">
+                    <div class="form-grid">
+                        <div class="input-group span-2">
+                            <label for="job-keywords"><i class="fa-solid fa-magnifying-glass"></i> Position / Role Title *</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="job-keywords" placeholder="e.g. Senior Web Developer, Data Scientist, Product Manager" value="Web Developer" required oninput="updateLinks()">
+                                <button type="button" class="clear-btn" onclick="clearInput('job-keywords')">&times;</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group span-2">
+                            <label for="job-company"><i class="fa-solid fa-building"></i> Target Brand / Company (Optional)</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="job-company" placeholder="e.g. Google, Microsoft, Amazon, Stripe, OpenAI, Swiggy, TCS" value="" oninput="updateLinks()">
+                                <button type="button" class="clear-btn" onclick="clearInput('job-company')">&times;</button>
+                            </div>
+                        </div>
+
+                        <!-- 2-PART DEPENDENT LOCATION SELECTOR (COUNTRY & CITY) -->
+                        <div class="input-group">
+                            <label for="job-country"><i class="fa-solid fa-globe"></i> 1. Select Country</label>
+                            <select id="job-country" onchange="onCountryChange(); updateLinks();">
+                                <option value="Remote">🌐 Remote / Worldwide</option>
+                                <option value="USA">🇺🇸 United States</option>
+                                <option value="India" selected>🇮🇳 India</option>
+                                <option value="UK">🇬🇧 United Kingdom</option>
+                                <option value="Canada">🇨🇦 Canada</option>
+                                <option value="UAE">🇦🇪 United Arab Emirates</option>
+                                <option value="Singapore">🇸🇬 Singapore</option>
+                                <option value="Germany">🇩🇪 Germany / Europe</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="job-city"><i class="fa-solid fa-city"></i> 2. Select City</label>
+                            <select id="job-city" onchange="updateLinks()">
+                                <!-- Populated dynamically based on Country selection -->
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="job-experience"><i class="fa-solid fa-user-graduate"></i> Experience Level</label>
+                            <select id="job-experience" onchange="updateLinks()">
+                                <option value="any">Any Experience</option>
+                                <option value="fresher">Fresher / Entry Level (0-2 Yrs)</option>
+                                <option value="mid" selected>Mid Level (2-5 Yrs)</option>
+                                <option value="senior">Senior Level (5-10 Yrs)</option>
+                                <option value="lead">Lead / Staff (10-15 Yrs)</option>
+                                <option value="executive">Executive / Director (15-20 Yrs)</option>
+                                <option value="cxo">VP / CXO / 20+ Yrs</option>
+                                <option value="internship">Internship</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="job-date"><i class="fa-solid fa-calendar-day"></i> Date Posted</label>
+                            <select id="job-date" onchange="updateLinks()">
+                                <option value="any">Anytime</option>
+                                <option value="24h" selected>Past 24 Hours (Fresh)</option>
+                                <option value="7d">Past 7 Days</option>
+                                <option value="14d">Past 14 Days</option>
+                                <option value="30d">Past 30 Days</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="job-work-type"><i class="fa-solid fa-laptop-house"></i> Work Mode</label>
+                            <select id="job-work-type" onchange="updateLinks()">
+                                <option value="any">All Modes</option>
+                                <option value="remote" selected>Remote Only</option>
+                                <option value="hybrid">Hybrid</option>
+                                <option value="onsite">On-Site / In-Office</option>
+                            </select>
+                        </div>
+
+                        <!-- Integrated Resume Upload Box -->
+                        <div class="input-group full-width resume-inline-box">
+                            <div class="resume-box-header">
+                                <label><i class="fa-solid fa-file-invoice"></i> Upload Resume (PDF / Word) to Calculate Live ATS Bypass Score %</label>
+                                <span class="file-name-badge hidden" id="file-name-display"></span>
+                            </div>
+                            <div class="resume-inline-controls">
+                                <div class="mini-dropzone" onclick="document.getElementById('resume-file-input').click()">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Upload PDF/Word CV</span>
+                                    <input type="file" id="resume-file-input" accept=".pdf,.doc,.docx,.txt" style="display:none;" onchange="handleResumeUpload(event)">
+                                </div>
+                                <div class="resume-text-input-wrapper">
+                                    <input type="text" id="ats-resume-text-inline" placeholder="or paste CV text here to calculate ATS score live..." oninput="handleInlineResumeTextChange()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Filter Badges / Brand Presets -->
+                    <div class="presets-container">
+                        <span class="preset-label"><i class="fa-solid fa-bolt"></i> Popular Brand Presets:</span>
+                        <div class="preset-chips">
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Google')">🏢 Google</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Microsoft')">🏢 Microsoft</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Amazon')">📦 Amazon</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Stripe')">💳 Stripe</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('OpenAI')">🤖 OpenAI</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Apple')">🍎 Apple</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('Swiggy')">🛵 Swiggy</button>
+                            <button type="button" class="chip" onclick="applyCompanyPreset('')">🌐 All Companies</button>
+                        </div>
+                    </div>
+
+                    <div class="search-actions">
+                        <button type="button" class="btn btn-primary" onclick="updateLinks()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Update Search Matrix
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="openAllSelectedPortals()">
+                            <i class="fa-solid fa-rocket"></i> Launch All Selected Portals
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="saveCurrentSearchPreset()">
+                            <i class="fa-solid fa-bookmark"></i> Save Search Preset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Saved Presets Bar (Dynamic) -->
+            <div id="saved-presets-card" class="card saved-presets-card hidden">
+                <div class="card-header-sm">
+                    <span><i class="fa-solid fa-bookmark"></i> My Saved Search Presets</span>
+                    <button class="text-btn" onclick="clearAllSavedPresets()">Clear All</button>
+                </div>
+                <div id="saved-presets-list" class="chip-group"></div>
+            </div>
+
+            <!-- View Switcher & Category Filter Bar -->
+            <div class="portal-categories-bar">
+                <div class="category-tabs">
+                    <button class="cat-tab active" onclick="filterPortals('all')">All Portals (<span id="count-all">0</span>)</button>
+                    <button class="cat-tab" onclick="filterPortals('portals')">📌 Job Portals First (<span id="count-portals">0</span>)</button>
+                    <button class="cat-tab" onclick="filterPortals('careers')">🏢 Direct Company Careers (<span id="count-careers">0</span>)</button>
+                    <button class="cat-tab" onclick="filterPortals('ats-engines')">⚡ Greenhouse/Lever/Workday (<span id="count-ats-engines">0</span>)</button>
+                    <button class="cat-tab" onclick="filterPortals('global')">🌐 Global & Remote (<span id="count-global">0</span>)</button>
+                    <button class="cat-tab" onclick="filterPortals('india')">🇮🇳 India Major (<span id="count-india">0</span>)</button>
+                </div>
+
+                <div class="view-switcher-group">
+                    <button class="view-btn active" id="view-table-btn" onclick="switchView('table')">
+                        <i class="fa-solid fa-table-list"></i> Table View
+                    </button>
+                    <button class="view-btn" id="view-grid-btn" onclick="switchView('grid')">
+                        <i class="fa-solid fa-border-all"></i> Cards View
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pop-up Notice Banner (Hidden by default) -->
+            <div id="popup-warning-banner" class="warning-banner hidden">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
+                    <strong>Browser Popup Alert:</strong> If multiple tabs don't open, please allow pop-ups for this site in your browser location bar (top-right corner icon).
+                </div>
+                <button onclick="dismissBanner('popup-warning-banner')" class="close-banner-btn">&times;</button>
+            </div>
+
+            <!-- TABULAR MATRIX DATA TABLE VIEW WITH ATS % COLUMN -->
+            <div id="matrix-table-container" class="table-container-card">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Portal / Career Page</th>
+                            <th>Target Brand / Company</th>
+                            <th>Position / Role Title</th>
+                            <th>ATS Bypass %</th>
+                            <th>Location & Mode</th>
+                            <th>Experience & Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-table-body">
+                        <!-- Dynamic Table Rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Portal Links Grid View -->
+            <div class="portal-grid hidden" id="portal-grid"></div>
+        </section>
+
+        <!-- BOOLEAN / GOOGLE X-RAY GENERATOR SECTION -->
+        <section id="section-boolean" class="app-section">
+            <div class="search-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Google X-Ray & Brand Search Generator</h2>
+                    <p class="subtext">Generate powerful search strings to find direct company career pages and unlisted recruiter posts on LinkedIn & Google.</p>
+                </div>
+
+                <div class="boolean-grid">
+                    <div class="boolean-box">
+                        <div class="box-title">
+                            <h3><i class="fa-brands fa-google"></i> Google X-Ray: Direct Company Careers Pages</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyBooleanQuery('query-careers-xray')">
+                                <i class="fa-regular fa-copy"></i> Copy String
+                            </button>
+                        </div>
+                        <div class="code-container">
+                            <pre><code id="query-careers-xray">site:careers.*.com OR site:*.com/careers "Web Developer" "Remote"</code></pre>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-sm btn-primary" onclick="launchGoogleSearch('query-careers-xray')">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search on Google Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="boolean-box">
+                        <div class="box-title">
+                            <h3><i class="fa-solid fa-layer-group"></i> Greenhouse & Lever ATS Direct Board Search</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyBooleanQuery('query-ats-xray')">
+                                <i class="fa-regular fa-copy"></i> Copy String
+                            </button>
+                        </div>
+                        <div class="code-container">
+                            <pre><code id="query-ats-xray">site:boards.greenhouse.io OR site:jobs.lever.co "Web Developer" "Remote"</code></pre>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-sm btn-primary" onclick="launchGoogleSearch('query-ats-xray')">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search on Google Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="boolean-box">
+                        <div class="box-title">
+                            <h3><i class="fa-brands fa-linkedin"></i> LinkedIn Recruiter Hiring Posts</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyBooleanQuery('query-linkedin-xray')">
+                                <i class="fa-regular fa-copy"></i> Copy String
+                            </button>
+                        </div>
+                        <div class="code-container">
+                            <pre><code id="query-linkedin-xray">site:linkedin.com/posts "hiring" OR "looking for" "Web Developer" "Remote"</code></pre>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-sm btn-primary" onclick="launchGoogleSearch('query-linkedin-xray')">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search on Google Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="boolean-box">
+                        <div class="box-title">
+                            <h3><i class="fa-brands fa-github"></i> GitHub Talent Finder (Engineers & Developers)</h3>
+                            <button class="btn btn-sm btn-outline" onclick="copyBooleanQuery('query-github-xray')">
+                                <i class="fa-regular fa-copy"></i> Copy String
+                            </button>
+                        </div>
+                        <div class="code-container">
+                            <pre><code id="query-github-xray">site:github.com "location: Remote" "Web Developer"</code></pre>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-sm btn-primary" onclick="launchGoogleSearch('query-github-xray')">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Search on Google Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOB APPLICATION TRACKER SECTION -->
+        <section id="section-tracker" class="app-section">
+            <div class="tracker-header-box">
+                <div class="title-meta">
+                    <h2><i class="fa-solid fa-kanban"></i> My Job Application Dashboard</h2>
+                    <p>Track your job applications, interview stages, follow-up notes, and salary targets in one place.</p>
+                </div>
+                
+                <div class="tracker-actions">
+                    <button class="btn btn-primary" onclick="openAddJobModal()">
+                        <i class="fa-solid fa-plus"></i> Add New Application
+                    </button>
+                    <button class="btn btn-outline" onclick="exportJobTrackerData()">
+                        <i class="fa-solid fa-download"></i> Export Data (JSON)
+                    </button>
+                    <button class="btn btn-outline" onclick="triggerImportJSON()">
+                        <i class="fa-solid fa-upload"></i> Import Data
+                    </button>
+                    <input type="file" id="import-file-input" style="display: none;" onchange="importJobTrackerData(event)">
+                </div>
+            </div>
+
+            <!-- Application Stats Summary -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon total"><i class="fa-solid fa-paper-plane"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-total">0</span>
+                        <span class="stat-label">Total Applied</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon interviewing"><i class="fa-solid fa-comments"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-interviewing">0</span>
+                        <span class="stat-label">In Interviews</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon offer"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-offer">0</span>
+                        <span class="stat-label">Offers Received</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rejected"><i class="fa-solid fa-circle-xmark"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-rejected">0</span>
+                        <span class="stat-label">Rejected / Archived</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracker Kanban Columns Grid -->
+            <div class="kanban-board">
+                <!-- Column: Applied -->
+                <div class="kanban-column" id="col-applied">
+                    <div class="column-header status-applied">
+                        <h3><i class="fa-solid fa-paper-plane"></i> Applied <span class="badge" id="badge-applied">0</span></h3>
+                    </div>
+                    <div class="kanban-cards" id="cards-applied"></div>
+                </div>
+
+                <!-- Column: In Review -->
+                <div class="kanban-column" id="col-review">
+                    <div class="column-header status-review">
+                        <h3><i class="fa-solid fa-eye"></i> Under Review <span class="badge" id="badge-review">0</span></h3>
+                    </div>
+                    <div class="kanban-cards" id="cards-review"></div>
+                </div>
+
+                <!-- Column: Interviewing -->
+                <div class="kanban-column" id="col-interviewing">
+                    <div class="column-header status-interviewing">
+                        <h3><i class="fa-solid fa-comments"></i> Interviewing <span class="badge" id="badge-interviewing">0</span></h3>
+                    </div>
+                    <div class="kanban-cards" id="cards-interviewing"></div>
+                </div>
+
+                <!-- Column: Offer -->
+                <div class="kanban-column" id="col-offer">
+                    <div class="column-header status-offer">
+                        <h3><i class="fa-solid fa-trophy"></i> Offer <span class="badge" id="badge-offer">0</span></h3>
+                    </div>
+                    <div class="kanban-cards" id="cards-offer"></div>
+                </div>
+
+                <!-- Column: Rejected -->
+                <div class="kanban-column" id="col-rejected">
+                    <div class="column-header status-rejected">
+                        <h3><i class="fa-solid fa-xmark"></i> Rejected / Closed <span class="badge" id="badge-rejected">0</span></h3>
+                    </div>
+                    <div class="kanban-cards" id="cards-rejected"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: ADD / EDIT JOB APPLICATION -->
+    <div id="job-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fa-solid fa-plus"></i> Add New Job Application</h3>
+                <button class="modal-close" onclick="closeJobModal()">&times;</button>
+            </div>
+            <form id="job-modal-form" onsubmit="saveJobApplication(event)">
+                <input type="hidden" id="edit-job-id">
+                
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="modal-company">Company Name *</label>
+                        <input type="text" id="modal-company" placeholder="e.g. Google, Microsoft, Startup Inc" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="modal-role">Role / Position *</label>
+                        <input type="text" id="modal-role" placeholder="e.g. Senior Web Developer" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="modal-portal">Portal Used</label>
+                        <select id="modal-portal">
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Naukri">Naukri.com</option>
+                            <option value="Indeed">Indeed</option>
+                            <option value="Glassdoor">Glassdoor</option>
+                            <option value="Google Careers">Google Careers</option>
+                            <option value="Microsoft Careers">Microsoft Careers</option>
+                            <option value="Amazon Jobs">Amazon Jobs</option>
+                            <option value="Greenhouse / Lever">Greenhouse / Lever ATS</option>
+                            <option value="Wellfound">Wellfound (AngelList)</option>
+                            <option value="Company Portal">Direct Company Career Page</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="modal-status">Application Status</label>
+                        <select id="modal-status">
+                            <option value="applied">Applied</option>
+                            <option value="review">Under Review</option>
+                            <option value="interviewing">Interview Scheduled</option>
+                            <option value="offer">Offer Received</option>
+                            <option value="rejected">Rejected / Archived</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="modal-date">Date Applied</label>
+                        <input type="date" id="modal-date">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="modal-salary">Expected / Offered Salary</label>
+                        <input type="text" id="modal-salary" placeholder="e.g. ₹18-24 LPA or $120k/yr">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label for="modal-url">Job Listing / Application Link</label>
+                        <input type="url" id="modal-url" placeholder="https://linkedin.com/jobs/view/...">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label for="modal-notes">Notes / Follow-up Details</label>
+                        <textarea id="modal-notes" rows="3" placeholder="Recruiter name, interview rounds, tech stack details..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeJobModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
